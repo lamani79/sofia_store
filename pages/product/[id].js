@@ -6,8 +6,7 @@ import MainNav from "../../components/nav";
 import Nav from "../../components/nav";
 import Image from "next/image";
 import ShopForm from "../../components/shop-form";
-import path from "path";
-import { promises as fs } from "fs";
+
 
 const SingleProduct = ({ info, product }) => {
   // const router = useRouter();
