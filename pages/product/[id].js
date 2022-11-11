@@ -87,14 +87,19 @@ export async function getStaticProps(context) {
     console.log(err);
   }
 
+  // ##############################################################
   // get site info
-  const jsonDirectory = path.join(process.cwd(), "json");
-  //Read the json data file data.json
-  const fileContents = JSON.parse(
-    await fs.readFile(jsonDirectory + "/site-info.json", "utf8")
-  );
+  const data_site_arr = [];
+  const site_info_collection = collection(db, "/site-info");
+  try {
+    const snapshot = await getDocs(site_info_collection);
+    snapshot.docs.forEach((doc) => data_site_arr.push({ ...doc.data() }));
+  } catch (err) {
+    console.log(err);
+  }
+
   return {
-    props: { info: fileContents, product: product_data },
+    props: { info: data_site_arr[0], product: product_data },
     revalidate: 10, // In seconds
   };
 }
