@@ -1,13 +1,13 @@
-const OrderCard = ({ info, closeCard, canEdit }) => {
-  const date = info.date.toDate();
-  const year = date.getFullYear();
-  const month = date.getMonth() - 1;
-  const day = date.getDay();
-  const hours = date.getHours();
+const OrderCard = ({ info, closeCard }) => {
+  const date = info?.date.toDate();
+  const year = date?.getFullYear();
+  const month = date?.getMonth() - 1;
+  const day = date?.getDay();
+  const hours = date?.getHours();
 
-  const minutes = date.getMinutes();
+  const minutes = date?.getMinutes();
 
-  const seconds = date.getSeconds();
+  const seconds = date?.getSeconds();
   const order_date = `${day}/${month}/${year} ----> ${hours}:${minutes}:${seconds} `;
   // const order_date = info.date.toDate().toString();
 
@@ -40,20 +40,20 @@ const OrderCard = ({ info, closeCard, canEdit }) => {
         <ul className="mt-4 space-y-2" id="order-card-list-info">
           <li className="">
             <h3 className="">- إسم العميل :</h3>
-            <p className="">{info.fullName}</p>
+            <p className="">{info?.fullName}</p>
           </li>
           <li>
             <h3 className="">- معرف العملية:</h3>
-            <p className="">{info.id}</p>
+            <p className="">{info?.id}</p>
           </li>
 
           <li>
             <h3 className="">- إسم المنتج:</h3>
-            <p className="">{info.productName}</p>
+            <p className="">{info?.productName}</p>
           </li>
           <li>
             <h3 className="">- رقم الهاتف :</h3>
-            <p className="">{info.phone}</p>
+            <p className="">{info?.phone}</p>
           </li>
           <li>
             <h3 className="">- تاريخ العملية :</h3>
@@ -61,23 +61,23 @@ const OrderCard = ({ info, closeCard, canEdit }) => {
           </li>
           <li>
             <h3 className="">- الولاية :</h3>
-            <p className="">{info.wilaya}</p>
+            <p className="">{info?.wilaya}</p>
           </li>
           <li>
             <h3 className="">- البلدية :</h3>
-            <p className="">{info.baladiya}</p>
+            <p className="">{info?.baladiya}</p>
           </li>
           <li>
             <h3 className="">- عدد الطلبيات :</h3>
-            <p className="">{info.quantity}</p>
+            <p className="">{info?.quantity}</p>
           </li>
           <li>
             <h3 className="">- حالة الطلبية :</h3>
-            <p className="">{info.status}</p>
+            <p className="">{info?.status}</p>
           </li>
           <li>
             <h3 className="">- معلومات إضافية</h3>
-            <p className="">{info.otherInfo}</p>
+            <p className="">{info?.otherInfo}</p>
           </li>
         </ul>
       </div>
