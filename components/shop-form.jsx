@@ -2,8 +2,18 @@ import Router, { useRouter } from "next/router";
 import { useState } from "react";
 import LoadingScreen from "../pages/admin/components/util/loading-screen";
 
-const ShopForm = ({ productId,productName }) => {
+const ShopForm = ({ productId, productName,setDeliveryPrice }) => {
   const router = useRouter();
+  function changeDeliveryPrice(wilaya) {
+    console.log(changeDeliveryPrice);
+    if (wilaya == "oran") {
+      setDeliveryPrice(300);
+    }
+    if (["tindouf", "Tamanrasset", "Illizi"].includes(wilaya)) {
+      setDeliveryPrice(1100);
+    }
+    setDeliveryPrice('600 - 800');
+  }
 
   const [formIsSendingData, setFormIsSendingData] = useState(false);
   async function sendInfo(e) {
@@ -85,57 +95,74 @@ const ShopForm = ({ productId,productName }) => {
               إختر الولاية*
             </label>
             <select
+              onChange={(e) =>
+                changeDeliveryPrice(
+                  e.target.options[e.target.selectedIndex].text
+                )
+              }
               id="wilaya"
               required
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
             >
-              <option value="[object Object]"> Adrar </option>
-              <option value="[object Object]"> Chlef </option>
-              <option value="[object Object]"> Laghouat </option>
-              <option value="[object Object]"> Oum El Bouaghi </option>
-              <option value="[object Object]"> Batna </option>
-              <option value="[object Object]"> Béjaïa </option>
-              <option value="[object Object]"> Biskra </option>
-              <option value="[object Object]"> Béchar </option>
-              <option value="[object Object]"> Blida </option>
-              <option value="[object Object]"> Bouira </option>
-              <option value="[object Object]"> Tamanrasset </option>
-              <option value="[object Object]"> Tébessa </option>
-              <option value="[object Object]"> Tlemcen </option>
-              <option value="[object Object]"> Tiaret </option>
-              <option value="[object Object]"> Tizi Ouzou </option>
-              <option value="[object Object]"> Alger </option>
-              <option value="[object Object]"> Djelfa </option>
-              <option value="[object Object]"> Jijel </option>
-              <option value="[object Object]"> Sétif </option>
-              <option value="[object Object]"> Saida </option>
-              <option value="[object Object]"> Skikda </option>
-              <option value="[object Object]"> Sidi Bel Abbès </option>
-              <option value="[object Object]"> Annaba </option>
-              <option value="[object Object]"> Guelma </option>
-              <option value="[object Object]"> Constantine </option>
-              <option value="[object Object]"> Médéa </option>
-              <option value="[object Object]"> Mostaganem </option>
-              <option value="[object Object]"> {"M'Sila"} </option>
-              <option value="[object Object]"> Mascara </option>
-              <option value="[object Object]"> Ouargla </option>
-              <option value="[object Object]"> Oran </option>
-              <option value="[object Object]"> El Bayadh </option>
-              <option value="[object Object]"> Bordj Bou Arreridj </option>
-              <option value="[object Object]"> Boumerdès </option>
-              <option value="[object Object]"> El Tarf </option>
-              <option value="[object Object]"> Tindouf </option>
-              <option value="[object Object]"> Tissemsilt </option>
-              <option value="[object Object]"> El Oued </option>
-              <option value="[object Object]"> Khenchela </option>
-              <option value="[object Object]"> Souk-Ahras </option>
-              <option value="[object Object]"> Tipaza </option>
-              <option value="[object Object]"> Mila </option>
-              <option value="[object Object]"> Aïn Defla </option>
-              <option value="[object Object]"> Naâma </option>
-              <option value="[object Object]"> Aïn Témouchent </option>
-              <option value="[object Object]"> Ghardaia </option>
-              <option value="[object Object]"> Relizane </option>
+              <option value="0">--Wilaya--</option>
+              <option value="Adrar">Adrar</option>
+              <option value="Aïn Defla">Aïn Defla</option>
+              <option value="Aïn Temouchent">Aïn Temouchent</option>
+              <option value="Alger">Alger</option>
+              <option value="Annaba">Annaba</option>
+              <option value="Batna">Batna</option>
+              <option value="Béchar">Béchar</option>
+              <option value="Bejaia">Bejaia</option>
+              <option value="BENI ABBES">BENI ABBES</option>
+              <option value="Biskra">Biskra</option>
+              <option value="Blida">Blida</option>
+              <option value="BORDJ BADJI MOKHTAR">BORDJ BADJI MOKHTAR</option>
+              <option value="Bordj Bou Arreridj">Bordj Bou Arreridj</option>
+              <option value="Bouira">Bouira</option>
+              <option value="Boumerdes">Boumerdes</option>
+              <option value="Chlef">Chlef</option>
+              <option value="Constantine">Constantine</option>
+              <option value="DJANET">DJANET</option>
+              <option value="Djelfa">Djelfa</option>
+              <option value="El Bayadh">El Bayadh</option>
+              <option value="EL MENIAA">EL MENIAA</option>
+              <option value="El Oued">El Oued</option>
+              <option value="El Tarf">El Tarf</option>
+              <option value="Ghardaia">Ghardaia</option>
+              <option value="Guelma">Guelma</option>
+              <option value="Illizi">Illizi</option>
+              <option value="IN GUEZZAM">IN GUEZZAM</option>
+              <option value="IN SALAH">IN SALAH</option>
+              <option value="Jijel">Jijel</option>
+              <option value="Khenchela">Khenchela</option>
+              <option value="Laghouat">Laghouat</option>
+              <option value="M'GHAIR">{"M'GHAIR"}</option>
+              <option value="Mascara">Mascara</option>
+              <option value="Medea">Medea</option>
+              <option value="Mila">Mila</option>
+              <option value="Mostaganem">Mostaganem</option>
+              <option value="MSila">MSila</option>
+              <option value="Naama">Naama</option>
+              <option value="Oran">Oran</option>
+              <option value="Ouargla">Ouargla</option>
+              <option value="OULED DJELLAL">OULED DJELLAL</option>
+              <option value="Oum El Bouaghi">Oum El Bouaghi</option>
+              <option value="Relizane">Relizane</option>
+              <option value="Saïda">Saïda</option>
+              <option value="Sétif">Sétif</option>
+              <option value="Sidi Bel Abbes">Sidi Bel Abbes</option>
+              <option value="Skikda">Skikda</option>
+              <option value="Souk Ahras">Souk Ahras</option>
+              <option value="Tamanrasset">Tamanrasset</option>
+              <option value="Tébessa">Tébessa</option>
+              <option value="Tiaret">Tiaret</option>
+              <option value="TIMIMOUN">TIMIMOUN</option>
+              <option value="Tindouf">Tindouf</option>
+              <option value="Tipaza">Tipaza</option>
+              <option value="Tissemsilt">Tissemsilt</option>
+              <option value="Tizi Ouzou">Tizi Ouzou</option>
+              <option value="Tlemcen">Tlemcen</option>
+              <option value="TOUGGOURT">TOUGGOURT</option>
             </select>
           </div>
 

@@ -6,11 +6,12 @@ import MainNav from "../../components/nav";
 import Nav from "../../components/nav";
 import Image from "next/image";
 import ShopForm from "../../components/shop-form";
-
+import { useState } from "react";
 
 const SingleProduct = ({ info, product }) => {
   // const router = useRouter();
   // const { id } = router.query;
+  const [deliveryPrice, setDeliveryPrice] = useState("إختر الولاية ");
 
   return (
     <div className="bg-white">
@@ -39,10 +40,16 @@ const SingleProduct = ({ info, product }) => {
                 </h1>
                 <span className="title-font font-bold text-4xl text-gray-900">
                   {product.price + "دج"}
+                  {"+ " + deliveryPrice + "دج" + " ثمن التوصيل"}
+
                 </span>
               </div>
 
-              <ShopForm productId={product.id} productName={product.title} />
+              <ShopForm
+                productId={product.id}
+                setDeliveryPrice={setDeliveryPrice}
+                productName={product.title}
+              />
 
               <p className="leading-relaxed">{product.desc}</p>
             </div>
