@@ -192,10 +192,12 @@ export async function getStaticProps(context) {
   //   console.log(err);
   // }
 
-  const jsonDirectory = path.join(process.cwd(), "json");
+  // const jsonDirectory = path.join(process.cwd(), "temp");
+  const site_info_location =
+  process.env.DEV == "yes" ? path.join(process.cwd(),'temp','site-info.json') : "/temp/site-info.json";
   //Read the json data file data.json
   const fileContents = JSON.parse(
-    await fs.readFile(jsonDirectory + "/site-info.json", "utf8")
+    await fs.readFile(site_info_location, "utf8")
   );
   return {
     props: { info: fileContents, products: data_product_arr },
