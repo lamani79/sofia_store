@@ -5,7 +5,8 @@ const SiteOptions = () => {
   const [data, setData] = useState({});
   async function getSiteInfo() {
     const json_data = await (await fetch("/api/get-site-info")).json();
-    setData(() => JSON.parse(json_data));
+    console.log(json_data)
+    setData(() => (json_data));
   }
   async function submitForm(e) {
     const { title, description, about, facebook, instagram } = e.target;

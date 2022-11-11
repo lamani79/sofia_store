@@ -7,8 +7,8 @@ import Link from "next/link";
 import { async } from "@firebase/util";
 import MainNav from "../components/nav";
 
-import path from "path";
-import { promises as fs } from "fs";
+// import path from "path";
+// import { promises as fs } from "fs";
 
 export default function Home({ info, products }) {
   return (
@@ -183,24 +183,24 @@ export async function getStaticProps(context) {
   }
   // ##############################################################
   // get site info
-  // const data_site_arr = [];
-  // const site_info_collection = collection(db, "/site-info");
-  // try {
-  //   const snapshot = await getDocs(site_info_collection);
-  //   snapshot.docs.forEach((doc) => data_site_arr.push({ ...doc.data() }));
-  // } catch (err) {
-  //   console.log(err);
-  // }
+  const data_site_arr = [];
+  const site_info_collection = collection(db, "/site-info");
+  try {
+    const snapshot = await getDocs(site_info_collection);
+    snapshot.docs.forEach((doc) => data_site_arr.push({ ...doc.data() }));
+  } catch (err) {
+    console.log(err);
+  }
 
   // const jsonDirectory = path.join(process.cwd(), "temp");
-  const site_info_location =
-  process.env.DEV == "yes" ? path.join(process.cwd(),'temp','site-info.json') : "/temp/site-info.json";
-  //Read the json data file data.json
-  const fileContents = JSON.parse(
-    await fs.readFile(site_info_location, "utf8")
-  );
+  // const site_info_location =
+  // process.env.DEV == "yes" ? path.join(process.cwd(),'temp','site-info.json') : "/temp/site-info.json";
+  // //Read the json data file data.json
+  // const fileContents = JSON.parse(
+  //   await fs.readFile(site_info_location, "utf8")
+  // );
   return {
-    props: { info: fileContents, products: data_product_arr },
+    props: { info: data_site_arr[0], products: data_product_arr },
     revalidate: 10, // In seconds
   };
 }
