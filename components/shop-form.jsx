@@ -95,6 +95,7 @@ const ShopForm = ({ productId, productName,setDeliveryPrice }) => {
               إختر الولاية*
             </label>
             <select
+            defaultValue={'Adrar'}
               onChange={(e) =>
                 changeDeliveryPrice(
                   e.target.options[e.target.selectedIndex].text
@@ -212,6 +213,16 @@ const ShopForm = ({ productId, productName,setDeliveryPrice }) => {
               className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 "
               placeholder="Your message..."
             ></textarea>
+          </div>
+          <div>
+            <h2 className="text-2xl font-bold underline">ملاحظة</h2>
+            <p className="text-lg font-medium">ثمن التوصبل يحدد حسب الأتي:</p>
+            <ul>
+              <li>- تندوف تمنراست إليزي 1100دج</li>
+               <li>- باقي ولايات الجنوب 800دج</li>
+               <li>- ولاية وهران 300دج</li>
+               <li>- باقي الولايات 600دج</li>
+            </ul>
           </div>
           <button
             type="submit"
