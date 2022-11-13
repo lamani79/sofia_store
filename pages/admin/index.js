@@ -10,12 +10,10 @@ import * as cookie from "cookie";
 
 export async function getServerSideProps({ req }) {
   const parsedCookies = cookie.parse(String(req.headers.cookie));
-  const token = parsedCookies.token;
-
-  if (
-    token !==
-    "eyJhbGciOiJIUzI1NiJ9.eyJSb2xlIjoiQWRtaW4iLCJJc3N1ZXIiOiJJc3N1ZXIiLCJVc2VybmFtZSI6IkphdmFJblVzZSIsImV4cCI6MTY2ODExNTg1NiwiaWF0IjoxNjY4MTE1ODU2fQ.3juNZiZJ0RYhworUyz-LKqEIbwrfozQW_n9ucucw9lY"
-  ) {
+  const user_token = parsedCookies.token;
+  const tokenId = process.env.token;
+  if (user_token !== tokenId) {
+    console.log(user_token, tokenId);
     return {
       redirect: {
         permanent: false,
@@ -24,9 +22,10 @@ export async function getServerSideProps({ req }) {
     };
   }
 
-  // Use this session information where you want.
   return {
-    props: {},
+    props: {
+      tokenId,
+    },
   };
 }
 
@@ -184,12 +183,3 @@ const AdminPage = () => {
 };
 
 export default AdminPage;
-
-// let headers = {};
-// const session = await getSession({ req });
-// if (session) {
-//   console.log(session);
-//   // headers = { Authorization: `Bearer ${session.jwt}` };
-// }
-
-// // Use this session information where you want.

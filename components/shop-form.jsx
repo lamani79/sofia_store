@@ -216,7 +216,7 @@ const ShopForm = ({ productId, productName,setDeliveryPrice }) => {
           </div>
           <div>
             <h2 className="text-2xl font-bold underline">ملاحظة</h2>
-            <p className="text-lg font-medium">ثمن التوصبل يحدد حسب الأتي:</p>
+            <p className="text-lg font-medium">ثمن التوصيل يحدد حسب الأتي:</p>
             <ul>
               <li>- تندوف تمنراست إليزي 1100دج</li>
                <li>- باقي ولايات الجنوب 800دج</li>
