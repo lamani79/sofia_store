@@ -1,14 +1,19 @@
 import { async } from "@firebase/util";
 import { useEffect, useState } from "react";
+import LoadingScreen from "./util/loading-screen";
 
 const SiteOptions = () => {
+  const [isLoading, setIsLoading] = useState(true);
+
   const [data, setData] = useState({});
   async function getSiteInfo() {
     const json_data = await (await fetch("/api/get-site-info")).json();
-    console.log(json_data)
-    setData(() => (json_data));
+    console.log(json_data);
+    setData(() => json_data);
+    setIsLoading(false)
   }
   async function submitForm(e) {
+    setIsLoading(true);
     const { title, description, about, facebook, instagram } = e.target;
     const new_data = {
       title: title.value,
@@ -17,25 +22,25 @@ const SiteOptions = () => {
       facebook: facebook.value,
       instagram: instagram.value,
     };
-   try{
-    const json_data = await (
-      await fetch("/api/set-site-info", {
-        method: "post",
-        body: JSON.stringify(new_data),
-      })
-    ).json();
-    alert("تم تحديث البيانات بنجاح")
-    
-   }catch(err){
-    alert("حدث خطئ")
-   }
-    
+    try {
+      const json_data = await (
+        await fetch("/api/set-site-info", {
+          method: "post",
+          body: JSON.stringify(new_data),
+        })
+      ).json();
+      alert("تم تحديث البيانات بنجاح");
+    } catch (err) {
+      alert("حدث خطئ");
+    }
+    setIsLoading(false)
   }
   useEffect(() => {
     getSiteInfo();
   }, []);
   return (
     <div dir="rtl">
+      {isLoading && <LoadingScreen />}
       <form className="space-y-4" onSubmit={(e) => submitForm(e)}>
         <div>
           <label
