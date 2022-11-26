@@ -1,12 +1,16 @@
-import { collection, doc, getDocs, updateDoc } from "firebase/firestore";
+import {
+  collection,
+  deleteDoc,
+  doc,
+  getDocs,
+  updateDoc,
+} from "firebase/firestore";
 import { useEffect, useState } from "react";
 import { db } from "../../../firebase";
 import OrderCard from "./order-card";
 import LoadingScreen from "./util/loading-screen";
 
-
 const DisplayOrders = () => {
-
   const order_collection = collection(db, "/orders");
   function getOrders() {
     // colleciton ref:
@@ -18,14 +22,27 @@ const DisplayOrders = () => {
           data_arr.push({ id: doc.id, ...doc.data() })
         );
         setOrdersData(data_arr);
+        setSortedOrders(data_arr.sort((a, b) => b.date - a.date));
         setisLoading(false);
       })
       .catch((err) => console.log(err));
+  }
+  async function removeOrder(order_id) {
+    setisLoading(true);
+    try {
+      await deleteDoc(doc(db, "/orders", order_id));
+      document.getElementById(order_id).remove();
+    } catch (err) {
+      console.log(err);
+      alert("حدث مشكل أثناء محاولة حذف الطلبية");
+    }
+    setisLoading(false);
   }
   const [isLoading, setisLoading] = useState(true);
   const [ordersData, setOrdersData] = useState([]);
   const [orderCardStatus, setOrderCardStatus] = useState(false);
   const [orderCardInfo, setOrderCardInfo] = useState(null);
+  const [sortedOrders, setSortedOrders] = useState([]);
 
   function displayCardInfo(info) {
     setOrderCardInfo(() => info);
@@ -36,30 +53,45 @@ const DisplayOrders = () => {
     setOrderCardStatus(false);
   }
   async function changeOrderStatus(id, new_status) {
-    setisLoading(() => true)
-    try{
+    setisLoading(() => true);
+    try {
       await updateDoc(doc(db, "/orders", id), {
         status: new_status,
       });
-      setisLoading(() => false)
-    }catch(errs){
-      console.log(errs)
+      setisLoading(() => false);
+    } catch (errs) {
+      console.log(errs);
     }
   }
+  function getLastOrdersFirst() {
+    // console.log(sortedOrders)
+    console.log()
+    setSortedOrders((o) => {
+      return o.sort((a, b) => a.date - b.date);
+      
+    });
+  }
+ 
   useEffect(() => {
     getOrders();
   }, []);
 
   return (
     <div className="">
-      {isLoading && <LoadingScreen/>}
+      {isLoading && <LoadingScreen />}
       {orderCardStatus && (
         <OrderCard closeCard={() => closeOrderCard()} info={orderCardInfo} />
       )}
       <div className="overflow-x-auto relative shadow-md sm:rounded-lg">
-        <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+        <table
+          id="order_table"
+          className="w-full text-sm text-left text-gray-500 dark:text-gray-400"
+        >
           <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
             <tr>
+              <th scope="col" className="py-3 px-6">
+                index
+              </th>
               <th scope="col" className="py-3 px-6">
                 إسم المنتج
               </th>
@@ -81,21 +113,33 @@ const DisplayOrders = () => {
               </th>
             </tr>
           </thead>
+
           <tbody>
             {
-              ordersData.map((order) => {
+              //  ordersData
+              sortedOrders.map((order, index) => {
+                const order_date = order?.date
+                  .toDate()
+                  .toLocaleDateString(undefined, {
+                    year: "numeric",
+                    month: "long",
+                    day: "numeric",
+                  });
+
                 return (
                   <tr
-                    key={order.key}
+                    id={order.id}
+                    key={order.id}
                     className="bg-white border-b dark:bg-gray-900 dark:border-gray-700"
                   >
-                    <th
-                      scope="row"
-                      className="max-w-[200px] overflow-x-scroll py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-                    >
-                      {order.productName}
+                    <th className="py-4 px-6" scope="row">
+                      {index + 1}
                     </th>
-                    <td className="py-4 px-6">02/11/2022</td>
+
+                    <td className="max-w-[200px] overflow-x-scroll py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                      {order.productName}
+                    </td>
+                    <td className="py-4 px-6">{order_date}</td>
                     <td className="py-4 px-6">{order.productId}</td>
                     <td className="py-4 px-6">{order.fullName}</td>
                     <td className="py-4 px-6">
@@ -133,6 +177,8 @@ const DisplayOrders = () => {
                         مشاهدة
                       </button>
                       <button
+                        onClick={() => getLastOrdersFirst()}
+                        // onClick={(e) => removeOrder(order.id, index, e)}
                         type="button"
                         className="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900"
                       >
