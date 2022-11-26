@@ -2,18 +2,26 @@ import { db } from "../../../firebase";
 import { doc, collection, getDocs, deleteDoc } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import LoadingScreen from "./util/loading-screen";
+import UpdateProduct from "./update-product";
 
 const DisplayProducts = () => {
+  const [idSelectedProduct, setIdSelectedProduct] = useState(null);
+  const [updateProductScreen, setUpdateProductScreen] = useState(false);
   const productCollection = collection(db, "/products");
-
-  function deleteProduct(id_product){
-    
-    setisLoading(true)
-    deleteDoc(doc(db,'/products',id_product)).then(() => {
-      document.getElementById(id_product).remove();
-      setisLoading(false);
-    }).catch(err => console.log(err))
+  function updateProduct(id_product) {
+    setUpdateProductScreen(true);
+    setIdSelectedProduct(id_product);
   }
+  function deleteProduct(id_product) {
+    setisLoading(true);
+    deleteDoc(doc(db, "/products", id_product))
+      .then(() => {
+        document.getElementById(id_product).remove();
+        setisLoading(false);
+      })
+      .catch((err) => console.log(err));
+  }
+
   function getProducts() {
     // colleciton ref:
     // get data from collection
@@ -31,11 +39,17 @@ const DisplayProducts = () => {
   const [isLoading, setisLoading] = useState(true);
   const [productData, setProductData] = useState([]);
   useEffect(() => {
-
-    getProducts()
+    getProducts();
   }, []);
   return (
     <div>
+      {updateProductScreen && (
+        <div className="fixed top-0 left-0 w-screen h-screen z-[99] grid place-content-center bg-black/90">
+          <div className="bg-gray-100 dark:bg-gray-800 w-screen h-screen pt-4">
+            <UpdateProduct productId={idSelectedProduct} />
+          </div>
+        </div>
+      )}
       {isLoading && <LoadingScreen />}
       <div className="overflow-x-auto relative shadow-md sm:rounded-lg">
         <table className="table-fixed min-w-full divide-y divide-gray-400">
@@ -87,6 +101,7 @@ const DisplayProducts = () => {
                   </td>
                   <td className="p-4 whitespace-nowrap space-x-2">
                     <button
+                      onClick={() => updateProduct(product.id)}
                       type="button"
                       data-modal-toggle="product-modal"
                       className="text-white bg-cyan-600 hover:bg-cyan-700 focus:ring-4 focus:ring-cyan-200 font-medium rounded-lg text-sm inline-flex items-center px-3 py-2 text-center"
@@ -107,7 +122,9 @@ const DisplayProducts = () => {
                       تعديل
                     </button>
                     <button
-                    onClick={() => {deleteProduct(product.id)}}
+                      onClick={() => {
+                        deleteProduct(product.id);
+                      }}
                       type="button"
                       data-modal-toggle="delete-product-modal"
                       className="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm inline-flex items-center px-3 py-2 text-center"
