@@ -60,29 +60,29 @@ const SingleProduct = ({ info, product }) => {
   );
 };
 
-export async function getStaticPaths() {
+// export async function getStaticPaths() {
   // ##############################################################
   //   // get all products ids
-  const products_ids = [];
-  const products_collection = collection(db, "products");
-  try {
-    const snapshot = await getDocs(products_collection);
-    snapshot.docs.forEach((doc) => {
-      // products_ids.push({ id: doc.id });
-      products_ids.push({ params: { id: doc.id } });
-    });
-  } catch (err) {
-    console.log(err);
-  }
+  // const products_ids = [];
+  // const products_collection = collection(db, "products");
+  // try {
+  //   const snapshot = await getDocs(products_collection);
+  //   snapshot.docs.forEach((doc) => {
+  //     // products_ids.push({ id: doc.id });
+  //     products_ids.push({ params: { id: doc.id } });
+  //   });
+  // } catch (err) {
+  //   console.log(err);
+  // }
 
   // ##############################################################
-  return {
-    paths: [...products_ids],
-    fallback: false, // can also be true or 'blocking'
-  };
-}
+  // return {
+  //   paths: [...products_ids],
+  //   fallback: false, // can also be true or 'blocking'
+  // };
+// }
 
-export async function getStaticProps(context) {
+export async function getServerSideProps(context) {
   // get product info:
   let product_data = {};
   const docRef = doc(db, "/products", context.params.id);
@@ -105,8 +105,10 @@ export async function getStaticProps(context) {
   }
 
   return {
-    props: { info: data_site_arr[0], product: product_data },
-    revalidate: 12, // In seconds
+    props: { 
+      info: data_site_arr[0],
+       product: product_data },
+    // revalidate: 10, // In seconds
   };
 }
 
