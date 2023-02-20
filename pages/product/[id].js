@@ -106,7 +106,7 @@ export async function getStaticProps(context) {
 
   return {
     props: { info: data_site_arr[0], product: product_data },
-    revalidate: 10, // In seconds
+    revalidate: 12, // In seconds
   };
 }
 
