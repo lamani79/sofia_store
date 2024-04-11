@@ -11,7 +11,7 @@ const LogIn = () => {
     const userName = e.target.userName.value;
     const password = e.target.password.value;
     const options = {
-      method: "POST", // or 'PUT'
+      method: "POST", 
       headers: {
         "Content-Type": "application/json",
       },

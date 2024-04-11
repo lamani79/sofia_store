@@ -31,9 +31,7 @@ const SingleProduct = ({ info, product }) => {
               />
             </div>
             <div dir="rtl" className="w-full lg:pl-10 lg:py-6 mt-6 lg:mt-0">
-              <h2 className="text-sm title-font text-gray-500 tracking-widest">
-                BRAND NAME
-              </h2>
+            
               <div className="">
                 <h1 className="text-gray-900 text-3xl title-font font-medium mb-4">
                   {product.title}

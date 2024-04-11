@@ -1,8 +1,9 @@
 import Router, { useRouter } from "next/router";
 import { useState } from "react";
 import LoadingScreen from "../pages/admin/components/util/loading-screen";
+import WILAYAS from "../const/wilayas";
 
-const ShopForm = ({ productId, productName,setDeliveryPrice }) => {
+const ShopForm = ({ productId, productName, setDeliveryPrice }) => {
   const router = useRouter();
   function changeDeliveryPrice(wilaya) {
     console.log(changeDeliveryPrice);
@@ -12,7 +13,7 @@ const ShopForm = ({ productId, productName,setDeliveryPrice }) => {
     if (["tindouf", "Tamanrasset", "Illizi"].includes(wilaya)) {
       setDeliveryPrice(1100);
     }
-    setDeliveryPrice('600 - 800');
+    setDeliveryPrice("600 - 800");
   }
 
   const [formIsSendingData, setFormIsSendingData] = useState(false);
@@ -65,7 +66,7 @@ const ShopForm = ({ productId, productName,setDeliveryPrice }) => {
               type="text"
               id="full_name"
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
-              placeholder="خليل ياسر"
+              placeholder="الإسم و اللقب"
               required
             />
           </div>
@@ -81,8 +82,8 @@ const ShopForm = ({ productId, productName,setDeliveryPrice }) => {
               type="tel"
               // pattern="^(00213|+213|0)(5|6|7)[0-9]{8}$"
               id="phone"
-              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
-              placeholder="0794086598"
+              className="bg-gray-50 border placeholder:text-right border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+              placeholder="رقم الهاتف هنا"
               required
             />
           </div>
@@ -95,7 +96,7 @@ const ShopForm = ({ productId, productName,setDeliveryPrice }) => {
               إختر الولاية*
             </label>
             <select
-            defaultValue={'Adrar'}
+              defaultValue={"Alger"}
               onChange={(e) =>
                 changeDeliveryPrice(
                   e.target.options[e.target.selectedIndex].text
@@ -105,65 +106,11 @@ const ShopForm = ({ productId, productName,setDeliveryPrice }) => {
               required
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
             >
-              <option value="0">--Wilaya--</option>
-              <option value="Adrar">Adrar</option>
-              <option value="Aïn Defla">Aïn Defla</option>
-              <option value="Aïn Temouchent">Aïn Temouchent</option>
-              <option value="Alger">Alger</option>
-              <option value="Annaba">Annaba</option>
-              <option value="Batna">Batna</option>
-              <option value="Béchar">Béchar</option>
-              <option value="Bejaia">Bejaia</option>
-              <option value="BENI ABBES">BENI ABBES</option>
-              <option value="Biskra">Biskra</option>
-              <option value="Blida">Blida</option>
-              <option value="BORDJ BADJI MOKHTAR">BORDJ BADJI MOKHTAR</option>
-              <option value="Bordj Bou Arreridj">Bordj Bou Arreridj</option>
-              <option value="Bouira">Bouira</option>
-              <option value="Boumerdes">Boumerdes</option>
-              <option value="Chlef">Chlef</option>
-              <option value="Constantine">Constantine</option>
-              <option value="DJANET">DJANET</option>
-              <option value="Djelfa">Djelfa</option>
-              <option value="El Bayadh">El Bayadh</option>
-              <option value="EL MENIAA">EL MENIAA</option>
-              <option value="El Oued">El Oued</option>
-              <option value="El Tarf">El Tarf</option>
-              <option value="Ghardaia">Ghardaia</option>
-              <option value="Guelma">Guelma</option>
-              <option value="Illizi">Illizi</option>
-              <option value="IN GUEZZAM">IN GUEZZAM</option>
-              <option value="IN SALAH">IN SALAH</option>
-              <option value="Jijel">Jijel</option>
-              <option value="Khenchela">Khenchela</option>
-              <option value="Laghouat">Laghouat</option>
-              <option value="M'GHAIR">{"M'GHAIR"}</option>
-              <option value="Mascara">Mascara</option>
-              <option value="Medea">Medea</option>
-              <option value="Mila">Mila</option>
-              <option value="Mostaganem">Mostaganem</option>
-              <option value="MSila">MSila</option>
-              <option value="Naama">Naama</option>
-              <option value="Oran">Oran</option>
-              <option value="Ouargla">Ouargla</option>
-              <option value="OULED DJELLAL">OULED DJELLAL</option>
-              <option value="Oum El Bouaghi">Oum El Bouaghi</option>
-              <option value="Relizane">Relizane</option>
-              <option value="Saïda">Saïda</option>
-              <option value="Sétif">Sétif</option>
-              <option value="Sidi Bel Abbes">Sidi Bel Abbes</option>
-              <option value="Skikda">Skikda</option>
-              <option value="Souk Ahras">Souk Ahras</option>
-              <option value="Tamanrasset">Tamanrasset</option>
-              <option value="Tébessa">Tébessa</option>
-              <option value="Tiaret">Tiaret</option>
-              <option value="TIMIMOUN">TIMIMOUN</option>
-              <option value="Tindouf">Tindouf</option>
-              <option value="Tipaza">Tipaza</option>
-              <option value="Tissemsilt">Tissemsilt</option>
-              <option value="Tizi Ouzou">Tizi Ouzou</option>
-              <option value="Tlemcen">Tlemcen</option>
-              <option value="TOUGGOURT">TOUGGOURT</option>
+              {WILAYAS.map((wilaya, index) => (
+                <option key={index} value={wilaya}>
+                  {wilaya + " - " + (index + 1)}
+                </option>
+              ))}
             </select>
           </div>
 
@@ -211,7 +158,7 @@ const ShopForm = ({ productId, productName,setDeliveryPrice }) => {
               id="other_info"
               rows="4"
               className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 "
-              placeholder="Your message..."
+              placeholder="معلومات أخرى عن الطلب تريد إضافتها"
             ></textarea>
           </div>
           <div>
@@ -219,9 +166,9 @@ const ShopForm = ({ productId, productName,setDeliveryPrice }) => {
             <p className="text-lg font-medium">ثمن التوصيل يحدد حسب الأتي:</p>
             <ul>
               <li>- تندوف تمنراست إليزي 1100دج</li>
-               <li>- باقي ولايات الجنوب 800دج</li>
-               <li>- ولاية وهران 300دج</li>
-               <li>- باقي الولايات 600دج</li>
+              <li>- باقي ولايات الجنوب 800دج</li>
+              <li>- ولاية وهران 300دج</li>
+              <li>- باقي الولايات 600دج</li>
             </ul>
           </div>
           <button
